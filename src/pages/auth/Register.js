@@ -1,6 +1,6 @@
 import Button from "../../components/shared/Button";
 import LoginForm from "../../components/shared/LoginForm";
-const Login = () => {
+const Register = () => {
   return (
     <div className="login-page">
       <div className="login-title">
@@ -10,18 +10,12 @@ const Login = () => {
         <LoginForm />
       </div>
       <div className="login-button">
-        <Button title="Login" />
+        <Button title="Register" />
       </div>
       <div className="login-options">
         <p>
-          <a href="/register" className="custom-link">
-            Register
-          </a>
-        </p>
-        <p>
-          reset{" "}
-          <a href="https://www.facebook.com" className="custom-link">
-            password
+          <a href="/" className="custom-link">
+            Login
           </a>
         </p>
       </div>
@@ -29,4 +23,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
