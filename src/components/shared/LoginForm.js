@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 const LoginForm = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
   const handleLogin = async () => {
     try {
       const response = await fetch("http://localhost:3001/api/login", {
@@ -20,7 +22,8 @@ const LoginForm = () => {
 
       // Successful login
       const data = await response.json();
-      // TODO: Redirect the user or update the application state
+      localStorage.setItem("token", data.token);
+      navigate("/home");
     } catch (error) {
       console.error("There was a problem with the login:", error);
       // TODO: Display an error message to the user
