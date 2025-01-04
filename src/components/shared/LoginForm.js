@@ -18,7 +18,7 @@ const LoginForm = () => {
       if (!response.ok) {
         // This is where you handle the error
         const errorData = await response.json(); // Try to parse JSON error from server
-
+        setErrorMessage(errorData);
         throw new Error(errorData.message || "Login failed");
       }
 
@@ -35,7 +35,7 @@ const LoginForm = () => {
     <div style={{ display: "flex", flexDirection: "column" }}>
       {errorMessage && (
         <div className="popup">
-          <p>{errorMessage}</p>
+          <p>{errorMessage.message}</p>
           <button onClick={() => setErrorMessage(null)}>Close</button>
         </div>
       )}

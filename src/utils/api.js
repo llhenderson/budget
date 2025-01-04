@@ -91,10 +91,22 @@ app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
 
   try {
+    if (!username) {
+      return res.status(401).json({ message: "Missing username" });
+    }
+    if (!password) {
+      return res.status(401).json({ message: "Missing password" });
+    }
+
     const query = 'SELECT * FROM "users" WHERE name = $1';
     const values = [username];
 
     const result = await pool.query(query, values);
+
+    if (result.rows.length === 0) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
     const user = result.rows[0];
     const hashedPassword = user.password;
 
@@ -106,10 +118,11 @@ app.post("/api/login", async (req, res) => {
         .status(200)
         .json({ message: "Login successful", userId: user.id, token });
     } else {
-      return res.status(401).json({ message: "Invalid username or password" });
+      res.status(401).json({ message: "Invalid credentials" });
     }
   } catch (error) {
     console.error("Error executing query", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 app.listen(port, () => {
