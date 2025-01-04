@@ -3,39 +3,14 @@ import React from "react";
 function IncomeTable() {
   const data = [
     {
-      name: "Alice",
-      age: 30,
-      city: "New York",
-      country: "USA",
-      occupation: "Software Engineer",
+      Income: "bill",
+      date: "2024-12-01",
+      type: "type",
     },
     {
-      name: "Bob",
-      age: 25,
-      city: "Los Angeles",
-      country: "USA",
-      occupation: "Data Scientist",
-    },
-    {
-      name: "Charlie",
-      age: 35,
-      city: "Chicago",
-      country: "USA",
-      occupation: "Project Manager",
-    },
-    {
-      name: "David",
-      age: 42,
-      city: "London",
-      country: "UK",
-      occupation: "Financial Analyst",
-    },
-    {
-      name: "Emily",
-      age: 28,
-      city: "Tokyo",
-      country: "Japan",
-      occupation: "UX Designer",
+      Income: "pizza",
+      date: "2024-12-02",
+      type: "food",
     },
   ];
   return (

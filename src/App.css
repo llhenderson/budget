@@ -32,7 +32,12 @@ body {
 .login-button:hover {
   background-color: #45a049;
 }
-
+/*Home*/
+.home-page {
+  display: flex;
+  flex-direction: row;
+}
+/*links*/
 .custom-link {
   color: #1e90ff;
   text-decoration: none;
@@ -41,4 +46,47 @@ body {
 }
 .custom-link:hover {
   color: #ff4500;
+}
+/*Budget Setup Component*/
+.budget-setup {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 300px;
+  background-color: white;
+}
+/* Budget Display Component*/
+.budget-display {
+  display: flex;
+  background-color: white;
+  height: 100vh;
+  width: 200px;
+  justify-content: center;
+}
+
+/* Expense */
+.new-expense-input {
+  width: 140px;
+}
+
+/* Income */
+.new-income-input {
+  width: 140px;
+}
+/* Expense and Income type selection */
+.expense-income-type {
+  width: 100px;
+}
+/*popup styling*/
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  z-index: 100; /* Ensure it's on top */
 }

@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Home from "./pages/Home";
+import Login from "./pages/auth/Login.js";
+import Register from "./pages/auth/Register.js";
+import Home from "./pages/Home.js";
 const App = () => {
   return (
     <BrowserRouter>

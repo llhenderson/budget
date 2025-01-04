@@ -1,0 +1,109 @@
+import { useState } from "react";
+import BudgetDisplayBar from "./BudgetDisplayBar.js";
+
+const BudgetSetupBar = () => {
+  const [goalAmount, setGoalAmount] = useState();
+  const [expense, setExpense] = useState();
+  const [expenseType, setExpenseType] = useState();
+  const [income, setIncome] = useState();
+  const [incomeType, setIncomeType] = useState();
+  const [recurring, setRecurring] = useState();
+
+  const handleExpenseChange = (event) => {
+    setRecurring(event.target.value);
+  };
+  return (
+    <div className="budget-setup">
+      <h1>Budget Setup</h1>
+      <label>Savings Goal</label>
+      <input
+        placeholder="Savings goal"
+        value={goalAmount}
+        className="goal-amount-input"
+        onChange={(e) => setGoalAmount(e.target.value)}
+      />
+      <label htmlFor="expense">Expense</label>
+      <div>
+        <input
+          id="expense"
+          placeholder="New Expense"
+          value={expense}
+          className="new-expense-input"
+          onChange={(e) => setExpense(e.target.value)}
+        />
+        <select
+          className="expense-income-type"
+          value={expenseType}
+          onChange={(e) => setExpenseType(e.target.value)}
+        >
+          <option value="">bill</option>
+          <option value="">grocery</option>
+          <option value="">other(unrequired)</option>
+          <option value="">other(required)</option>
+        </select>
+      </div>
+      <div>
+        <label>
+          <input
+            type="radio"
+            value="Recurring"
+            checked={recurring === "Recurring"}
+            onChange={handleExpenseChange}
+          />
+          Recurring
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Non-Recurring"
+            checked={recurring === "Non-Recurring"}
+            onChange={handleExpenseChange}
+          />
+          Non-Recurring
+        </label>
+      </div>
+
+      <label htmlFor="income">Income</label>
+      <div>
+        <input
+          id="income"
+          placeholder="New Income"
+          value={income}
+          className="new-income-input"
+          onChange={(e) => setIncome(e.target.value)}
+        />
+        <select
+          className="expense-income-type"
+          value={incomeType}
+          onChange={(e) => setIncomeType(e.target.value)}
+        >
+          <option value="">Primary Job</option>
+          <option value="">Side gig</option>
+        </select>
+      </div>
+      <div>
+        <label>
+          <input
+            type="radio"
+            value="Recurring"
+            checked={recurring === "Recurring"}
+            onChange={handleExpenseChange}
+          />
+          Recurring
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="Non-Recurring"
+            checked={recurring === "Non-Recurring"}
+            onChange={handleExpenseChange}
+          />
+          Non-Recurring
+        </label>
+      </div>
+      <BudgetDisplayBar />
+    </div>
+  );
+};
+
+export default BudgetSetupBar;

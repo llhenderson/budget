@@ -1,5 +1,5 @@
-import Button from "../../components/shared/Button";
-import LoginForm from "../../components/shared/LoginForm";
+import RegisterForm from "../../components/shared/RegisterForm.js";
+
 const Register = () => {
   return (
     <div className="login-page">
@@ -7,10 +7,7 @@ const Register = () => {
         <h1>My budget</h1>
       </div>
       <div className="login-form">
-        <LoginForm />
-      </div>
-      <div className="login-button">
-        <Button title="Register" />
+        <RegisterForm />
       </div>
       <div className="login-options">
         <p>
