@@ -1,18 +1,6 @@
-import { useEffect } from "react";
-import Button from "../../components/shared/Button.js";
 import LoginForm from "../../components/shared/LoginForm.js";
-import { useNavigate, useNavigationType } from "react-router-dom";
 import login_main from "../../public/login_main.jpg";
 const Login = () => {
-  const navigate = useNavigate();
-  /*
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      navigate("/home");
-    }
-  },[]);
-  */
   return (
     <div
       className="login-page"

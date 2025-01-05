@@ -3,7 +3,6 @@ import Button from "./Button";
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const handleRegister = async () => {
     try {
       const response = await fetch("http://localhost:3001/api/register", {
@@ -30,19 +29,39 @@ const RegisterForm = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
-      <input
-        placeholder="username"
-        value={username}
-        className="login-input"
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        placeholder="password"
-        value={password}
-        className="login-input"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <div>
+      <div style={{ textAlign: "center" }}>
+        <p>
+          Your Budgeting Journey Starts Here
+          <b>
+            <br /> Register to get started!
+          </b>
+        </p>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginTop: 30,
+        }}
+      >
+        <label htmlFor="username">username</label>
+        <input
+          id="username"
+          placeholder="username"
+          value={username}
+          className="login-input"
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <lable htmlFor="password">password</lable>
+        <input
+          id="password"
+          placeholder="password"
+          value={password}
+          className="login-input"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Button onClick={handleRegister}>Register</Button>
       </div>
     </div>

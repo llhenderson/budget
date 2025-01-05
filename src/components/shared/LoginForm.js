@@ -41,8 +41,9 @@ const LoginForm = () => {
       )}
       <div style={{ textAlign: "center" }}>
         <p>
-          <b>Access Your Budget Now</b> <br /> Sign In & See Your Financial
-          Overview
+          Access Your Budget Now
+          <br />
+          <b> Sign In & See Your Financial Overview</b>
         </p>
       </div>
       <div
