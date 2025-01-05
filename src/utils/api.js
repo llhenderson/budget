@@ -59,6 +59,12 @@ app.post("/api/register", async (req, res) => {
   const { username, password } = req.body;
 
   try {
+    if (!username) {
+      return res.status(401).json({ message: "Missing username" });
+    }
+    if (!password) {
+      return res.status(401).json({ message: "Missing password" });
+    }
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
     const query = `
@@ -125,6 +131,20 @@ app.post("/api/login", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+app.get("/api/chart", async (req, res) => {
+  const { id } = req.body;
+  try {
+    const query = `
+  SELECT * FROM finances WHERE user_id =$1`;
+    const values = [9];
+    const result = await pool.query(query, values);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(401).json({ message: "Error retrieving data..." });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });

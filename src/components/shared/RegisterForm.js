@@ -3,6 +3,7 @@ import Button from "./Button";
 const RegisterForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState(null);
   const handleRegister = async () => {
     try {
       const response = await fetch("http://localhost:3001/api/register", {
@@ -14,13 +15,12 @@ const RegisterForm = () => {
       });
 
       if (!response.ok) {
-        const errorData = await response.json(); // Get error message from server
+        const errorData = await response.json(); // Try to parse JSON error from server
+        setErrorMessage(errorData);
         throw new Error(errorData.error || "Network response was not ok");
       }
 
       const data = await response.json();
-      console.log(data.message); // Log success message
-      // Optionally, redirect the user or show a success message
     } catch (error) {
       console.error("There was a problem with the registration:", error);
       // Display error message to the user (e.g., using an alert or state variable)
@@ -29,6 +29,12 @@ const RegisterForm = () => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
+      {errorMessage && (
+        <div className="popup">
+          <p>{errorMessage.message}</p>
+          <button onClick={() => setErrorMessage(null)}>Close</button>
+        </div>
+      )}
       <div style={{ textAlign: "center" }}>
         <p>
           Your Budgeting Journey Starts Here

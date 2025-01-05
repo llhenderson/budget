@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import {
   LineChart,
   Line,
@@ -9,35 +10,66 @@ import {
   Legend,
 } from "recharts";
 
-const data = [
-  { name: "Jan", uv: 4000, pv: 2400, amt: 2400 },
-  { name: "Feb", uv: 3000, pv: 1398, amt: 2210 },
-  { name: "Mar", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Apr", uv: 2780, pv: 3908, amt: 2000 },
-  { name: "May", uv: 1890, pv: 4800, amt: 2181 },
-  { name: "Jun", uv: 2390, pv: 3800, amt: 2500 },
-  { name: "Jul", uv: 3490, pv: 4300, amt: 2100 },
-];
-
 const Chart = ({ filter }) => {
+  const [data, setData] = useState([]); // Initialize with an empty array
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div style={{ backgroundColor: "white" }}>
+          <p className="label">{`Date: ${new Date(
+            label
+          ).toLocaleDateString()}`}</p>
+          <p className="intro">Amount: {payload[0].value}</p>
+          <p className="desc">Description: {payload[0].payload.description}</p>
+        </div>
+      );
+    }
+
+    return null;
+  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/chart");
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message);
+        }
+        const res = await response.json();
+        setData(res.data.rows);
+        console.log(res.data.rows);
+      } catch (error) {
+        console.error("There was a problem with fetch.", error);
+      } finally {
+        setIsLoading(false); // Set loading to false after fetch completes (success or failure)
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       {filter}
 
-      <LineChart
-        width={730}
-        height={250}
-        data={data}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-      </LineChart>
+      {isLoading ? ( // Conditional rendering based on loading state
+        <p>Loading...</p>
+      ) : (
+        <LineChart
+          width={1230}
+          height={250}
+          data={data}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="date" />
+          <YAxis domain={[0, 1000]} />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend />
+          <Line type="monotone" dataKey="amount" stroke="#8884d8" />
+        </LineChart>
+      )}
     </div>
   );
 };
