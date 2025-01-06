@@ -11,6 +11,7 @@ import {
 } from "recharts";
 
 const Chart = ({ filter }) => {
+  console.log(filter);
   const [data, setData] = useState([]); // Initialize with an empty array
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const CustomTooltip = ({ active, payload, label }) => {
@@ -31,13 +32,18 @@ const Chart = ({ filter }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/chart");
+        const response = await fetch(
+          `http://localhost:3001/api/chart?${new URLSearchParams(
+            filter
+          ).toString()}`
+        );
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message);
         }
         const res = await response.json();
         setData(res.data.rows);
+        console.log(res.data.rows);
         console.log(res.data.rows);
       } catch (error) {
         console.error("There was a problem with fetch.", error);
@@ -47,12 +53,10 @@ const Chart = ({ filter }) => {
     };
 
     fetchData();
-  }, []);
+  }, [filter]);
 
   return (
     <div>
-      {filter}
-
       {isLoading ? ( // Conditional rendering based on loading state
         <p>Loading...</p>
       ) : (

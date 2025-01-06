@@ -93,6 +93,7 @@ app.post("/api/register", async (req, res) => {
     }
   }
 });
+
 app.post("/api/login", async (req, res) => {
   const { username, password } = req.body;
 
@@ -133,11 +134,12 @@ app.post("/api/login", async (req, res) => {
 });
 
 app.get("/api/chart", async (req, res) => {
-  const { id } = req.body;
+  const { startDate, endDate } = req.query;
+  console.log(startDate);
   try {
     const query = `
-  SELECT * FROM finances WHERE user_id =$1`;
-    const values = [9];
+  SELECT * FROM finances WHERE "date" >= $1 AND "date" <= $2`;
+    const values = [endDate, startDate];
     const result = await pool.query(query, values);
     res.status(200).json({ data: result });
   } catch (error) {
