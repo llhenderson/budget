@@ -160,7 +160,7 @@ app.get("/api/expenseTable", async (req, res) => {
 
   try {
     const query = `
-  SELECT description,amount,type,date FROM expenses WHERE "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
+  SELECT id,description,amount,type,date FROM expenses WHERE "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
     const value = [endDate, startDate];
     const result = await pool.query(query, value);
 
@@ -194,6 +194,28 @@ app.get("/api/incomeChart", async (req, res) => {
     res.status(200).json({ data: result });
   } catch (error) {
     res.status(401).json({ message: "Error retrieving data..." });
+  }
+});
+
+app.put("/api/update/expenses", async (req, res) => {
+  const { description, amount, type, date, id } = req.body;
+
+  try {
+    const query = `
+    UPDATE expenses SET 
+    description = $1,
+    amount = $2,
+    type = $3,
+    date = $4
+    WHERE id= $5;`;
+    const values = [description, amount, type, date, id];
+
+    await pool.query(query, values);
+
+    res.status(200).json({ message: "Expense updated successfully" });
+  } catch (error) {
+    console.error("Error updating expenses:", error);
+    res.status(500).json({ error: "Failed to update expenses" });
   }
 });
 app.listen(port, () => {
