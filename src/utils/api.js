@@ -135,18 +135,67 @@ app.post("/api/login", async (req, res) => {
 
 app.get("/api/chart", async (req, res) => {
   const { startDate, endDate } = req.query;
-  console.log(startDate);
+  try {
+    const queryEssential = `
+  SELECT * FROM expenses WHERE "type" = 'essential' AND "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
+    const valuesEssential = [endDate, startDate];
+    const resultEssential = await pool.query(queryEssential, valuesEssential);
+    const queryNonessential = `
+  SELECT * FROM expenses WHERE "type" = 'non-essential' AND "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
+    const valuesNonessential = [endDate, startDate];
+    const resultNonessential = await pool.query(
+      queryNonessential,
+      valuesNonessential
+    );
+
+    res
+      .status(200)
+      .json({ dataOne: resultEssential, dataTwo: resultNonessential });
+  } catch (error) {
+    res.status(401).json({ message: "Error retrieving data..." });
+  }
+});
+app.get("/api/expenseTable", async (req, res) => {
+  const { startDate, endDate } = req.query;
+
   try {
     const query = `
-  SELECT * FROM finances WHERE "date" >= $1 AND "date" <= $2`;
-    const values = [endDate, startDate];
-    const result = await pool.query(query, values);
+  SELECT description,amount,type,date FROM expenses WHERE "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
+    const value = [endDate, startDate];
+    const result = await pool.query(query, value);
+
     res.status(200).json({ data: result });
   } catch (error) {
     res.status(401).json({ message: "Error retrieving data..." });
   }
 });
+app.get("/api/incomeTable", async (req, res) => {
+  const { startDate, endDate } = req.query;
 
+  try {
+    const query = `
+    SELECT description,amount,type,date FROM income WHERE "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
+    const value = [endDate, startDate];
+    const result = await pool.query(query, value);
+
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(401).json({ message: "Error retrieving data..." });
+  }
+});
+app.get("/api/incomeChart", async (req, res) => {
+  const { startDate, endDate } = req.query;
+
+  try {
+    const query = `
+    SELECT * FROM income WHERE "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
+    const value = [endDate, startDate];
+    const result = await pool.query(query, value);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(401).json({ message: "Error retrieving data..." });
+  }
+});
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });

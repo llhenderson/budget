@@ -8,6 +8,7 @@ export const endDateFormating = () => {
   const day = ("0" + date.getDate()).slice(-2); // Get the day of the month (DD)
 
   const formattedDate = `${year}-${month}-${day}`; // Combine into YYYY-MM-DD format
+
   return formattedDate;
 };
 

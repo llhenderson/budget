@@ -10,7 +10,34 @@ import {
   Legend,
 } from "recharts";
 
-const Chart = ({ dataOne, dataTwo, isLoading }) => {
+const IncomeChart = ({ filter, isLoading }) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/api/incomeChart?${new URLSearchParams(
+            filter
+          ).toString()}`
+        );
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message);
+        }
+
+        const data = await response.json();
+        console.log(data);
+        setData(data.data.rows); // Assuming 'data.rows' contains the expense data
+      } catch (error) {
+        console.error("There was a problem with fetch.", error);
+      } finally {
+        // Consider setting a loading state to 'false' here to indicate data is fetched
+      }
+    };
+
+    fetchData();
+  }, [filter]);
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -44,33 +71,15 @@ const Chart = ({ dataOne, dataTwo, isLoading }) => {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
-            <YAxis domain={[0, 1000]} />
+            <YAxis domain={[0, 3000]} />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Line
               type="monotone"
-              data={dataOne}
+              data={data}
               dataKey="amount"
               stroke="#8884d8"
               name="essential"
-            />
-          </LineChart>
-          <LineChart
-            width={700}
-            height={250}
-            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" />
-            <YAxis domain={[0, 1000]} />
-            <Tooltip content={<CustomTooltip />} />
-            <Legend />
-            <Line
-              type="monotone"
-              data={dataTwo}
-              dataKey="amount"
-              stroke="#82ca9d"
-              name="non-essential"
             />
           </LineChart>
         </div>
@@ -79,4 +88,4 @@ const Chart = ({ dataOne, dataTwo, isLoading }) => {
   );
 };
 
-export default Chart;
+export default IncomeChart;

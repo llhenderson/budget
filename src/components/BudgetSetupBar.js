@@ -15,6 +15,7 @@ const BudgetSetupBar = () => {
   return (
     <div className="budget-setup">
       <h1>Budget Setup</h1>
+
       <label>Savings Goal</label>
       <input
         placeholder="Savings goal"
