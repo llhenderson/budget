@@ -174,7 +174,7 @@ app.get("/api/incomeTable", async (req, res) => {
 
   try {
     const query = `
-    SELECT description,amount,type,date FROM income WHERE "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
+    SELECT id,description,amount,type,date FROM income WHERE "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
     const value = [endDate, startDate];
     const result = await pool.query(query, value);
 
@@ -216,6 +216,26 @@ app.put("/api/update/expenses", async (req, res) => {
   } catch (error) {
     console.error("Error updating expenses:", error);
     res.status(500).json({ error: "Failed to update expenses" });
+  }
+});
+app.put("/api/update/income", async (req, res) => {
+  const { description, amount, type, date, id } = req.body;
+  try {
+    const query = `
+    UPDATE income SET 
+    description = $1,
+    amount = $2,
+    type = $3,
+    date = $4
+    WHERE id= $5;`;
+    const values = [description, amount, type, date, id];
+
+    await pool.query(query, values);
+
+    res.status(200).json({ message: "Income updated successfully" });
+  } catch (error) {
+    console.error("Error updating incomes:", error);
+    res.status(500).json({ error: "Failed to update incomes" });
   }
 });
 app.listen(port, () => {
