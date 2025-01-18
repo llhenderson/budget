@@ -1,5 +1,6 @@
 import BudgetSetupBar from "../components/BudgetSetupBar.js";
 import Chart from "../components/Chart.js";
+import SavingsChart from "../components/SavingsChart.js";
 import ExpenseTable from "../components/ExpenseTable.js";
 import IncomeTable from "../components/IncomeTable.js";
 import { useEffect, useState, useMemo } from "react";
@@ -39,6 +40,7 @@ const Home = () => {
           throw new Error(errorData.message);
         }
         const res = await response.json();
+        console.log(res);
         setDataOne(res.dataOne.rows);
         setDataTwo(res.dataTwo.rows);
       } catch (error) {
@@ -78,6 +80,8 @@ const Home = () => {
           <Chart dataOne={dataOne} dataTwo={dataTwo} isLoading={isLoading} />
         ) : chartType == "income" ? (
           <IncomeChart filter={filter} isLoading={isLoading} />
+        ) : chartType == "savings" ? (
+          <SavingsChart filter={filter} isLoading={isLoading} />
         ) : (
           <div>loading</div>
         )}

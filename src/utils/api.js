@@ -137,20 +137,28 @@ app.get("/api/chart", async (req, res) => {
   const { startDate, endDate } = req.query;
   try {
     const queryEssential = `
-  SELECT * FROM expenses WHERE "type" = 'essential' AND "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
-    const valuesEssential = [endDate, startDate];
+      SELECT id, user_id, description, -amount AS amount, type, date 
+      FROM expenses 
+      WHERE "type" = 'essential' AND "date" >= $1 AND "date" <= $2 
+      ORDER BY "date"`;
+    const valuesEssential = [endDate, startDate]; // Corrected order
     const resultEssential = await pool.query(queryEssential, valuesEssential);
+
     const queryNonessential = `
-  SELECT * FROM expenses WHERE "type" = 'non-essential' AND "date" >= $1 AND "date" <= $2 ORDER BY "date"`;
-    const valuesNonessential = [endDate, startDate];
+      SELECT id, user_id, description, -amount AS amount, type, date 
+      FROM expenses 
+      WHERE "type" = 'non-essential' AND "date" >= $1 AND "date" <= $2 
+      ORDER BY "date"`;
+    const valuesNonessential = [endDate, startDate]; // Corrected order
     const resultNonessential = await pool.query(
       queryNonessential,
       valuesNonessential
     );
 
-    res
-      .status(200)
-      .json({ dataOne: resultEssential, dataTwo: resultNonessential });
+    res.status(200).json({
+      dataOne: resultEssential,
+      dataTwo: resultNonessential,
+    }); // Access rows property
   } catch (error) {
     res.status(401).json({ message: "Error retrieving data..." });
   }
@@ -196,7 +204,64 @@ app.get("/api/incomeChart", async (req, res) => {
     res.status(401).json({ message: "Error retrieving data..." });
   }
 });
+app.get("/api/savingsChart", async (req, res) => {
+  const { startDate, endDate } = req.query;
 
+  try {
+    const query = `
+    SELECT * FROM savings WHERE "date" >= $1 AND "date" < $2 ORDER BY "date"`;
+    const value = [endDate, startDate];
+    const result = await pool.query(query, value);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(401).json({ message: "Error retrieving data..." });
+  }
+});
+app.get("/api/savings", async (req, res) => {
+  const { startDate, endDate } = req.query;
+
+  try {
+    const query = `
+    SELECT
+    id,
+    user_id,
+    description,
+    amount,
+    type,
+    date
+FROM
+    expenses
+    WHERE "date" >= $1 AND "date" <= $2
+UNION ALL
+SELECT
+    id,
+    user_id,
+    description,
+    amount,
+    type,
+    date
+FROM
+    income 
+    WHERE "date" >= $1 AND "date" <= $2
+ORDER BY
+    date;`;
+    const values = [endDate, startDate];
+    const result = await pool.query(query, values);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(401).json({ message: "Error retrieving data..." });
+  }
+});
+app.get("/api/expense", async (req, res) => {
+  try {
+    const query = `
+    SELECT * FROM expenses WHERE user_id =9`;
+    const result = await pool.query(query);
+    res.status(200).json({ data: result });
+  } catch (error) {
+    res.status(401).json({ message: "Error retrieving data..." });
+  }
+});
 app.put("/api/update/expenses", async (req, res) => {
   const { description, amount, type, date, id } = req.body;
 

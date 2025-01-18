@@ -13,11 +13,15 @@ import {
 const Chart = ({ dataOne, dataTwo, isLoading }) => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
+      const date = new Date(label);
+
+      // 1. Adjust for Timezone (if needed)
+      const userTimezoneOffset = date.getTimezoneOffset() * 60000; // Offset in milliseconds
+      const adjustedDate = new Date(date.getTime() + userTimezoneOffset);
+
       return (
         <div style={{ backgroundColor: "white" }}>
-          <p className="label">{`Date: ${new Date(
-            label
-          ).toLocaleDateString()}`}</p>
+          <p className="label">{`Date: ${adjustedDate.toLocaleDateString()}`}</p>
           <p className="intro">Amount: {payload[0].value}</p>
           <p className="desc">Description: {payload[0].payload.description}</p>
         </div>

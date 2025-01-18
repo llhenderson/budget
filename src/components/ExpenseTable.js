@@ -121,6 +121,8 @@ function ExpenseTable({ filter }) {
       {edit.edit ? (
         <div className="edit-popup">
           <div style={{ display: "flex", flexDirection: "column" }}>
+            <p>Edit: {edit.item.description}</p>
+
             <div style={{ display: "flex", flexDirection: "row" }}>
               <input
                 id="edit_description"

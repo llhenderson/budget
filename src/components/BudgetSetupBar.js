@@ -7,10 +7,14 @@ const BudgetSetupBar = () => {
   const [expenseType, setExpenseType] = useState();
   const [income, setIncome] = useState();
   const [incomeType, setIncomeType] = useState();
-  const [recurring, setRecurring] = useState();
+  const [expenseRecurring, setExpenseRecurring] = useState();
+  const [incomeRecurring, setIncomeRecurring] = useState();
 
   const handleExpenseChange = (event) => {
-    setRecurring(event.target.value);
+    setExpenseRecurring(event.target.value);
+  };
+  const handleIncomeChange = (event) => {
+    setIncomeRecurring(event.target.value);
   };
   return (
     <div className="budget-setup">
@@ -48,7 +52,7 @@ const BudgetSetupBar = () => {
           <input
             type="radio"
             value="Recurring"
-            checked={recurring === "Recurring"}
+            checked={expenseRecurring === "Recurring"}
             onChange={handleExpenseChange}
           />
           Recurring
@@ -57,7 +61,7 @@ const BudgetSetupBar = () => {
           <input
             type="radio"
             value="Non-Recurring"
-            checked={recurring === "Non-Recurring"}
+            checked={expenseRecurring === "Non-Recurring"}
             onChange={handleExpenseChange}
           />
           Non-Recurring
@@ -87,8 +91,8 @@ const BudgetSetupBar = () => {
           <input
             type="radio"
             value="Recurring"
-            checked={recurring === "Recurring"}
-            onChange={handleExpenseChange}
+            checked={incomeRecurring === "Recurring"}
+            onChange={handleIncomeChange}
           />
           Recurring
         </label>
@@ -96,8 +100,8 @@ const BudgetSetupBar = () => {
           <input
             type="radio"
             value="Non-Recurring"
-            checked={recurring === "Non-Recurring"}
-            onChange={handleExpenseChange}
+            checked={incomeRecurring === "Non-Recurring"}
+            onChange={handleIncomeChange}
           />
           Non-Recurring
         </label>
