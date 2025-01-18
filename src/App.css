@@ -63,12 +63,25 @@ body {
 }
 /*Budget Setup Component*/
 .budget-setup {
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
-  align-items: center;
   flex-direction: column;
   height: 100vh;
   width: 300px;
   background-color: white;
+}
+.savings_goal {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.add-expense {
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 /* Budget Display Component*/
 .budget-display {
@@ -90,7 +103,7 @@ body {
 }
 /* Expense and Income type selection */
 .expense-income-type {
-  width: 100px;
+  width: 148px;
 }
 /*popup styling*/
 .popup {
