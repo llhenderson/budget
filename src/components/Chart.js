@@ -42,7 +42,7 @@ const Chart = ({ dataOne, dataTwo, isLoading }) => {
           }}
         >
           <LineChart
-            width={700}
+            width={600}
             height={250}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
@@ -60,7 +60,7 @@ const Chart = ({ dataOne, dataTwo, isLoading }) => {
             />
           </LineChart>
           <LineChart
-            width={700}
+            width={600}
             height={250}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >

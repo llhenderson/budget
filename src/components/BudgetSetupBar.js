@@ -1,6 +1,8 @@
 import { useState } from "react";
 import BudgetDisplayBar from "./BudgetDisplayBar.js";
 import Button from "../components/shared/Button.js";
+import login_main from "../public/login_main.jpg";
+
 const BudgetSetupBar = () => {
   const [goalAmount, setGoalAmount] = useState();
   const [startingAmount, setStartingAmount] = useState();

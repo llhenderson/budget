@@ -65,17 +65,22 @@ const Home = () => {
       </div>
 
       <div style={{ justifyItems: "center", width: "100%" }}>
-        <select value={chartType} onChange={handleChartChange}>
-          <option value="savings">savings</option>
-          <option value="expenses">expenses</option>
-          <option value="income">income</option>
-        </select>
-        <select value={timeRange} onChange={handleChange}>
-          <option value="week">Week</option>
-          <option value="day">Day</option>
-          <option value="month">Month</option>
-          <option value="year">Year</option>
-        </select>
+        <div style={{ textAlign: "center" }}>
+          <h1>BUDGET TRACKER</h1>
+        </div>
+        <div style={{ paddingBottom: "10px" }}>
+          <select value={chartType} onChange={handleChartChange}>
+            <option value="savings">savings</option>
+            <option value="expenses">expenses</option>
+            <option value="income">income</option>
+          </select>
+          <select value={timeRange} onChange={handleChange}>
+            <option value="week">Week</option>
+            <option value="day">Day</option>
+            <option value="month">Month</option>
+            <option value="year">Year</option>
+          </select>
+        </div>
         {chartType == "expenses" ? (
           <Chart dataOne={dataOne} dataTwo={dataTwo} isLoading={isLoading} />
         ) : chartType == "income" ? (
@@ -85,8 +90,13 @@ const Home = () => {
         ) : (
           <div>loading</div>
         )}
-        <div style={{ display: "flex", flexDirection: "row" }}>
-          <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+          }}
+        >
+          <div style={{ paddingRight: 100 }}>
             <ExpenseTable filter={filter} />
           </div>
           <div>

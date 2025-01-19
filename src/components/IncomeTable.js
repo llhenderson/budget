@@ -76,6 +76,9 @@ function IncomeTable({ filter }) {
   };
   return (
     <div>
+      <div style={{ textAlign: "center" }}>
+        <h1>INCOME</h1>
+      </div>
       <table style={{ borderCollapse: "collapse" }}>
         {" "}
         {/* Add borderCollapse */}

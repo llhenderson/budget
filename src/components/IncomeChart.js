@@ -63,8 +63,8 @@ const IncomeChart = ({ filter, isLoading }) => {
           }}
         >
           <LineChart
-            width={700}
-            height={250}
+            width={1200}
+            height={300}
             margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
@@ -77,7 +77,7 @@ const IncomeChart = ({ filter, isLoading }) => {
               data={data}
               dataKey="amount"
               stroke="#8884d8"
-              name="essential"
+              name="income"
             />
           </LineChart>
         </div>

@@ -80,6 +80,9 @@ function ExpenseTable({ filter }) {
   };
   return (
     <div>
+      <div style={{ textAlign: "center" }}>
+        <h1>EXPENSES</h1>
+      </div>
       <table style={{ borderCollapse: "collapse" }}>
         {" "}
         {/* Add borderCollapse */}
